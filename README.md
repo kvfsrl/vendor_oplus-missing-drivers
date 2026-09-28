@@ -12,10 +12,13 @@ branch `oneplus/sm8650_v_15.0.0_oneplus12` (Android 15 = kernel 6.1).
 | module | source | exposes |
 |---|---|---|
 | `oplus_bsp_midas` | `vendor/oplus/kernel/cpu/midas/v1_gki/` | `/dev/midas` char device (cdev) + `mmap` ring of per-task `time_in_state[]`; ioctl table in `midas_ioctl.c`; `/proc` binder stats tree via `binder_stats_dev.c`; hooks `android_vh_cpufreq_acct_update_power`, `android_vh_binder_proc_transaction`, `android_vh_binder_new_ref`, `android_vh_binder_del_ref` |
-| `oplus_afs_config` | stub (reimplemented) | `/proc/oplus_afs_config/afs_config` (contents of `/system_ext/etc/afsConfig.pb`), `/proc/oplus_afs_config/afs_enable` |
 | `oplus_bsp_zram_opt` | `vendor/oplus/kernel/mm/zram_opt/zram_opt.c` | `/proc/oplus_mem/swappiness_para`, `/proc/oplus_mem/dynamic_swappiness`; hooks `android_vh_tune_swappiness`, `android_vh_tune_inactive_ratio`, `android_rvh_set_balance_anon_file_reclaim`, `android_vh_init_adjust_zone_wmark` |
 | `oplus_bootprof` | OnePlus phoenix base | boot profiling ring, exposed over `/proc` |
 | `oplus_shutdown_reason` | OnePlus last_boot_reason | `/proc/last_boot_reason`, panic/boot reason passthrough |
+
+`oplus_afs_config` is **not** here -- it lives in
+`kvfsrl/vendor_frameboost-drivers` (`afs_config/`), which already ships the stub
+with a builtin protobuf fallback matching peridot's `/system_ext/etc/afsConfig.pb`.
 
 ## midas port notes (v1_gki)
 
