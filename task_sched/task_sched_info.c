@@ -28,7 +28,7 @@
 #include <trace/events/power.h>
 #include <trace/events/task.h>
 #include "task_sched_info.h"
-#include "../sched_assist/sa_common.h"
+#include <../kernel/oplus_cpu/sched/sched_assist/sa_common.h>
 #include <asm/stacktrace.h>
 #include <linux/kallsyms.h>
 #include <linux/sched_clock.h>
