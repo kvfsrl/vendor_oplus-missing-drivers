@@ -14,3 +14,11 @@ GCOV_PROFILE := y
 obj-$(CONFIG_OPLUS_FEATURE_TASK_LOAD) += oplus_bsp_task_load.o
 
 oplus_bsp_task_load-y := task_load.o
+
+# OnePlus sources include kernel-internal headers via relative angle-includes
+# that only resolve when the module builds from inside the kernel tree:
+#   <kernel/sched/sched.h>              -> -I$(srctree)/..
+#   <../fs/proc/internal.h>             -> $(srctree)/.. w/ fs symlink
+#   <../kernel/oplus_cpu/sched/...>     -> -I$(srctree)/
+ccflags-y += -I$(srctree)/
+ccflags-y += -I$(srctree)/..
