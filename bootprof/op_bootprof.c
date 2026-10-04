@@ -236,14 +236,14 @@ static const struct proc_ops op_bootfrom_fops = {
 };
 
 /* device_initcall */
-void __init init_boot_prof(void)
+void init_boot_prof(void)
 {
 	proc_create("phoenix", 0666, NULL, &op_bootprof_fops);
 	proc_create("opbootfrom", 0666, NULL, &op_bootfrom_fops);
 }
 
 /* early_initcall */
-void __init init_bootprof_buf(void)
+void init_bootprof_buf(void)
 {
 	op_bootprof_switch(1);
 }

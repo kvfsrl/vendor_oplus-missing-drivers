@@ -24,8 +24,8 @@
 #define PHX_KE_MARK "PHX_KE_HAPPEND"
 #define TIME_FORMAT "yyyy-mm-dd HH:mm:ss"
 
-extern int is_phoenix_enable(void);
-extern void phx_log_dump(const char *phx_error);
+__weak int is_phoenix_enable(void) { return 1; }
+__weak void phx_log_dump(const char *phx_error) { printk("phoenix: %s\n", phx_error); }
 
 static void phx_handle_hang_oplus(const char *);
 static void phx_handle_critical_service_crash_4_times(const char *);
@@ -308,12 +308,12 @@ void phx_monit(const char *monitoring_command)
 
 EXPORT_SYMBOL(phx_monit);
 
-extern void __init init_bootprof_buf(void);
-extern void __init init_boot_prof(void);
-extern void __init phoenix_hlos_watchdog_init(void);
+extern void init_bootprof_buf(void);
+extern void init_boot_prof(void);
+
 
 /* postcore_initcall */
-static int __init phoenix_base_init(void)
+static int phoenix_base_init(void)
 {
 	/* bootprof->early_initcall */
 	init_bootprof_buf();
@@ -329,12 +329,12 @@ static int __init phoenix_base_init(void)
 	init_boot_prof();
 
 	/* watchdog->arch_initcall */
-	phoenix_hlos_watchdog_init();
+
 
 	return 0;
 }
 
-postcore_initcall(phoenix_base_init);
+module_init(phoenix_base_init);
 
 MODULE_DESCRIPTION("phoenix base");
 MODULE_LICENSE("GPL v2");
